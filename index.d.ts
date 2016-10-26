@@ -1,4 +1,2 @@
-declare var tracelog = (a:any, b:any):any;
-declare module "tracelog" {
-    export = tracelog;
-}
+import tracelog from './index';
+export default tracelog

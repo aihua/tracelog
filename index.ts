@@ -1,4 +1,4 @@
-module.exports = function (sth, expect) { // trace is enabled if expect is not undefined
+export default function tracelog(sth, expect) { // trace is enabled if expect is not undefined
     if (expect != null) {
         try {
             if (!compare2Objects(sth, expect)) {
