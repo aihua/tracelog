@@ -10,6 +10,10 @@ tracelog(a, '') if not the same type it will print tracelog information
 
 tracelog(a) simply print 1.
 
+# useage
+var trace = require('tracelog').default;
+
+import trace from 'tracelog';  //this might warn about type info in vscode
 
 ```
 var tracelog = require('./index');
