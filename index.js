@@ -2,13 +2,12 @@ module.exports = function (sth, expect) { // trace is enabled if expect is not u
     if (expect != null) {
         try {
             if (!compare2Objects(sth, expect)) {
-                throw new Error(sth)
+                throw new Error(sth);
             } else {
                 return true;
             }
         } catch (e) {
-            // console.log(e.stack)
-            console.log(e.stack.split('\n')[2])
+            console.log(e.stack);
             return false;
         }
     } else {

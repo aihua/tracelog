@@ -1,6 +1,11 @@
 
 Util functions for debug and trace; can do type checking for backend mocking check for fast iteration.
 
+a = 1
+tracelog(a, '') if not the same type it will print tracelog information
+tracelog(a) simply print 1.
+
+
 ```
 var tracelog = require('./index');
 var assert = require("chai").assert;

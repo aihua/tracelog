@@ -1,6 +1,6 @@
 {
   "name": "tracelog",
-  "version": "0.0.1",
+  "version": "1.0.2",
   "description": "util functions for debug and trace; can do type checking for backend mocking check for fast iteration",
   "main": "index.js",
   "dependencies": {
