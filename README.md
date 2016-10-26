@@ -1,6 +1,7 @@
 
 Util functions for debug and trace; can do type checking for backend mocking check for fast iteration.
 
+```
 var tracelog = require('./index');
 var assert = require("chai").assert;
 describe('test simple', function () {
@@ -66,3 +67,4 @@ describe('test simple', function () {
             }), true);
     });
 })
+```
