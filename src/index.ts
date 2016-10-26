@@ -1,4 +1,4 @@
-export default function tracelog(sth, expect) { // trace is enabled if expect is not undefined
+function tracelog(sth, expect) { // trace is enabled if expect is not undefined
     if (expect != null) {
         try {
             if (!compare2Objects(sth, expect)) {
@@ -14,6 +14,7 @@ export default function tracelog(sth, expect) { // trace is enabled if expect is
         console.log(sth);
     }
 }
+export default tracelog
 function compare2Objects(x, y) {
     var p;
 

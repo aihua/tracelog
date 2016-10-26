@@ -1,8 +1,13 @@
 
 Util functions for debug and trace; can do type checking for backend mocking check for fast iteration.
 
+In strict mode, one cannot use arguments.caller so it is hard to trace bugs.
+This library utilizes error stack to print full debug info when necessary.
+
+e.g.
 a = 1
 tracelog(a, '') if not the same type it will print tracelog information
+
 tracelog(a) simply print 1.
 
 

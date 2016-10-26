@@ -1,4 +1,4 @@
-var tracelog = require('./index');
+var tracelog = require('../lib/index.js').default;
 var assert = require("chai").assert;
 describe('test simple', function () {
     it('number', function () {
