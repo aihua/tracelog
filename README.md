@@ -12,17 +12,18 @@ tracelog(a) print nothing. (use console.log in this case if you want print it an
 
 # useage
 
- // @ depth: trace depth
-    // @ color: console log color
-    // @ fullprint: trace full information
-    // @ disable: disable log
-    // @ callback(logstr): for outer logger, write to file etc
+```
+// @ depth: trace depth
+// @ color: console log color
+// @ fullprint: trace full information
+// @ disable: disable log
+// @ callback(logstr): for outer logger, write to file etc
 opt = { depth: 3, color: 'yellow', fullprint: false, disable: false, callback: undefined }
 var tracelog = require('../lib/index.js').default(opt); 
 
 import trace from 'tracelog';  //this might warn about type info in vscode
 tracelog = trace();
-```
+
 var tracelog = require('../lib/index.js').default(); 
 var assert = require("chai").assert;
 describe('test simple', function () {
