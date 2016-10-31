@@ -12,6 +12,8 @@ tracelog(a , [1]) if not the same type it will print tracelog information
 tracelog(a) print nothing. (use console.log in this case if you want to print it anyway)
 ```
 
+note that variable keys cannot be traced.
+
 # useage
 
 ```
