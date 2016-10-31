@@ -4,11 +4,13 @@ Util functions for debug and trace; can do type checking for backend mocking che
 In strict mode, one cannot use arguments.caller so it is hard to trace bugs.
 This library utilizes error stack to print full debug info when necessary.
 
+```
 e.g.
 a = ['fd']
 tracelog(a , [1]) if not the same type it will print tracelog information
 ["fd"] expected: [1] Context.<anonymous>(index.spec.js:24:26) << callFn(runnable.js:250:21) 
-tracelog(a) print nothing. (use console.log in this case if you want print it anyway)
+tracelog(a) print nothing. (use console.log in this case if you want to print it anyway)
+```
 
 # useage
 
