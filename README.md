@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/fex-team/tracelog.svg?branch=master)](https://travis-ci.org/fex-team/tracelog)
+[![Coverage Status](https://coveralls.io/repos/fex-team/tracelog/badge.png)](https://coveralls.io/r/fex-team/tracelog)
 
 Util functions for debug and trace; can do type checking for backend mocking check for fast iteration.
 
