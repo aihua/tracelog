@@ -223,6 +223,6 @@ describe('test simple', function () {
     });
 })
 ```
-
-[npm-url]: https://img.shields.io/npm/v/tracelog.svg
+[npm-image]: https://img.shields.io/npm/v/tracelog.svg
+[npm-url]: https://www.npmjs.com/package/tracelog
 [npm-download]: https://img.shields.io/npm/dm/tracelog.svg
