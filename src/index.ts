@@ -1,6 +1,6 @@
 /// <reference path="../node_modules/@types/colors/index.d.ts" />
-/// <reference path="../typings/modules/lodash/index.d.ts" />
 import * as colors  from 'colors';
+import * as Mock from 'mockjs';
 export namespace tracelog {
     export function print(o) {
         function handleStr(o) {
@@ -46,12 +46,16 @@ export namespace tracelog {
     // @ callback(logstr): for outer logger, write to file etc
     // @ printJSON: use JSON.stringify for logging
     export function log(opt) {
-        let defaultopt = { depth: 3, color: 'yellow', printfullstack: false, disable: false, callback: undefined, printJSON: false};
-        for (let i in defaultopt) {
-            if (opt[i] == null) {
-                opt[i] = defaultopt[i];
-            }
-        };
+        let defaultopt = { depth: 3, color: 'yellow', printfullstack: false, disable: false, useMockjs: false, callback: undefined, printJSON: false};
+        if(opt == null){
+            opt = defaultopt;
+        }else{
+             for (let i in defaultopt) {
+                if (opt[i] == null) {
+                    opt[i] = defaultopt[i];
+                }
+            };
+        }
         let stringify = print;
         if(opt['printJSON']){
             stringify = JSON.stringify;
@@ -60,14 +64,24 @@ export namespace tracelog {
         // @ expect expected form
         // @ tmpopt local settings, can override opt
         return function (sth, expect, tmpopt) { // trace is enabled if expect is not undefined
-            if (opt['disable']) { return; }
-            let color = (str) => {
-                return colors ? colors[opt['color']](str) : str;
-            }
             let options = (attr) => {
                 return (tmpopt && attr in tmpopt) ? tmpopt[attr] : opt[attr];
             }
+            if (options('disable')) { return; }
+            let color = (str) => {
+                return colors ? colors[opt['color']](str) : str;
+            }
+
             if (expect == null) { return; }
+
+            let compare2Objects = checkIfSame;
+            if (options('useMockjs')) {
+                compare2Objects = (sth, expect) => {
+                    [sth, expect] = [expect, sth];
+                    return Mock.valid(sth, expect).length == 0;
+                }
+            }
+
             try {
                 if (!compare2Objects(sth, expect)) {
                     throw new Error(sth);
@@ -96,7 +110,7 @@ export namespace tracelog {
 
 
 
-    function compare2Objects(x, y) {
+    function checkIfSame(x, y) {
         var p;
 
         // remember that NaN === NaN returns false
@@ -133,7 +147,7 @@ export namespace tracelog {
                 return true;
             } else {
                 for (var i = 0; i < Math.min(x.length, y.length); i++) {
-                    if (!compare2Objects(x[i], y[i])) {
+                    if (!checkIfSame(x[i], y[i])) {
                         return false;
                     }
                 }
@@ -163,7 +177,7 @@ export namespace tracelog {
         // Quick checking of one object being a subset of another.
         // todo: cache the structure of arguments[0] for performance
         for (p in y) {
-            if (!compare2Objects(y.hasOwnProperty(p), x.hasOwnProperty(p))) {
+            if (!checkIfSame(y.hasOwnProperty(p), x.hasOwnProperty(p))) {
                 return false;
             }
             else if (typeof y[p] !== typeof x[p]) {
@@ -173,7 +187,7 @@ export namespace tracelog {
             }
         }
         for (p in x) {
-            if (!compare2Objects(y.hasOwnProperty(p), x.hasOwnProperty(p))) {
+            if (!checkIfSame(y.hasOwnProperty(p), x.hasOwnProperty(p))) {
                 return false;
             }
             else if (typeof y[p] !== typeof x[p]) {
@@ -181,7 +195,7 @@ export namespace tracelog {
                     return false;
                 }
             }
-            if (!compare2Objects(x[p], y[p])) {
+            if (!checkIfSame(x[p], y[p])) {
                 return false;
 
             }

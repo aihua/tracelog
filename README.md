@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/fex-team/tracelog.svg?branch=master)](https://travis-ci.org/fex-team/tracelog)
 [![Coverage Status](https://coveralls.io/repos/fex-team/tracelog/badge.png)](https://coveralls.io/r/fex-team/tracelog)
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
 Util functions for debug and trace; can do type checking for backend mocking check for fast iteration.
 
@@ -134,3 +135,6 @@ describe('test simple', function () {
     });
 })
 ```
+
+[npm-url]: https://img.shields.io/npm/v/tracelog.svg
+[npm-download]: https://img.shields.io/npm/dm/tracelog.svg
