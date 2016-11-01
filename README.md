@@ -11,10 +11,10 @@ e.g.
 a = ['fd']
 tracelog(a , [1]) if not the same type it will print tracelog information
 ["fd"] expected: [1] Context.<anonymous>(index.spec.js:24:26) << callFn(runnable.js:250:21) 
-tracelog(a) print nothing. (use console.log in this case if you want to print it anyway)
+tracelog(a) simply print nothing. (use console.log in this case if you want to print it anyway)
 ```
 
-note that variable keys cannot be traced.
+note that variable keys can be traced with RegExp.
 
 # useage
 
@@ -24,13 +24,12 @@ note that variable keys cannot be traced.
 // @ fullprint: trace full information
 // @ disable: disable log
 // @ callback(logstr): for outer logger, write to file etc
-opt = { depth: 3, color: 'yellow', fullprint: false, disable: false, callback: undefined }
-var tracelog = require('../lib/index.js').default(opt); 
+// @ printJSON: use JSON.stringify for logging, which may not print RegExp etc.
+default options
+opt = { depth: 3, color: 'yellow', fullprint: false, disable: false, callback: undefined, printJSON: false }
 
-import trace from 'tracelog';  //this might warn about type info in vscode
-tracelog = trace();
+var tracelog = require('../lib/index.js').tracelog.log({depth: 3});
 
-var tracelog = require('../lib/index.js').default(); 
 var assert = require("chai").assert;
 describe('test simple', function () {
     it('number', function () {
@@ -39,6 +38,9 @@ describe('test simple', function () {
     it('string', function () {
         assert.deepEqual(tracelog('abc', ''), true);
     });
+    it('regex', function(){
+        assert.deepEqual(tracelog('ab', /^ab$/), true);
+    })
     it('array1', function () {
         assert.deepEqual(tracelog([1, 2, 3], [1, 2]), true);
     });
@@ -114,6 +116,19 @@ describe('test simple', function () {
                         c: function () { return false; },
                         d: '323'
                     }
+                }
+            }), true);
+    });
+    it('similar object regex', function () {
+        assert.deepEqual(tracelog(
+            {
+                data: {
+                    a: 1, b: 2, c: 'apple 10'
+                }
+            },
+            {
+                data: {
+                    a: 13, b: 322, c: /^\w+ \d+$/
                 }
             }), true);
     });

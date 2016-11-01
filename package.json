@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "dependencies": {
     "@types/colors": "^0.6.33",
-    "colors": "^1.1.2"
+    "colors": "^1.1.2",
+    "lodash": "^4.16.5"
   },
   "devDependencies": {
     "mocha": "^1.17.1",
@@ -13,7 +14,8 @@
   },
   "scripts": {
     "compile": "tsc --outDir lib -w src/index.ts",
-    "test": "mocha test/index.spec.js -w"
+    "test": "mocha test/index.spec.js -w",
+    "testprint": "mocha test/index.spec_print.js -w"
   },
   "repository": {
     "type": "git",

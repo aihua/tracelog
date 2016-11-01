@@ -1,4 +1,4 @@
-var tracelog = require('../lib/index.js').default(); 
+var tracelog = require('../lib/index.js').tracelog.log({depth: 3});
 
 var assert = require("chai").assert;
 describe('test simple', function () {
@@ -8,6 +8,9 @@ describe('test simple', function () {
     it('string', function () {
         assert.deepEqual(tracelog('abc', ''), true);
     });
+    it('regex', function(){
+        assert.deepEqual(tracelog('ab', /^ab$/), true);
+    })
     it('array1', function () {
         assert.deepEqual(tracelog([1, 2, 3], [1, 2]), true);
     });
@@ -83,6 +86,19 @@ describe('test simple', function () {
                         c: function () { return false; },
                         d: '323'
                     }
+                }
+            }), true);
+    });
+    it('similar object regex', function () {
+        assert.deepEqual(tracelog(
+            {
+                data: {
+                    a: 1, b: 2, c: 'apple 10'
+                }
+            },
+            {
+                data: {
+                    a: 13, b: 322, c: /^\w+ \d+$/
                 }
             }), true);
     });

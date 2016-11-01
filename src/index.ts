@@ -1,6 +1,35 @@
 /// <reference path="../node_modules/@types/colors/index.d.ts" />
+/// <reference path="../typings/modules/lodash/index.d.ts" />
 import * as colors  from 'colors';
-namespace tracelogNamespace {
+export namespace tracelog {
+    export function print(o) {
+        function handleStr(o) {
+            return typeof o == 'string' ? `"${o}"` : o;
+        }
+        if (o === null) {
+            return "null,";
+        }
+        var str = '';
+        if (typeof o != 'object') {
+            str += handleStr(o);
+        } else if (o instanceof RegExp) {
+            str += o;
+        } else if (o instanceof Array) {
+            str += '[';
+            for (let i of o) {
+                str += print(i);
+            }
+            str += ']';
+        } else {
+            str += '{';
+            for (let i in o) {
+                str += (typeof (i) == 'string' ? `"${i}"` : i) + ':' + print(o[i]);
+            }
+            return str + '},';
+        }
+        return str + ',';
+    }
+
     function extract(str) {
         try {
             str = str.match(/at ([^ ]+) \((.*)\)/);
@@ -12,10 +41,21 @@ namespace tracelogNamespace {
     }
     // @ depth: trace depth
     // @ color: console log color
-    // @ fullprint: trace full information
+    // @ printfullstack: trace full information
     // @ disable: disable log
     // @ callback(logstr): for outer logger, write to file etc
-    export function tracelog(opt = { depth: 3, color: 'yellow', fullprint: false, disable: false, callback: undefined }) {
+    // @ printJSON: use JSON.stringify for logging
+    export function log(opt) {
+        let defaultopt = { depth: 3, color: 'yellow', printfullstack: false, disable: false, callback: undefined, printJSON: false};
+        for (let i in defaultopt) {
+            if (opt[i] == null) {
+                opt[i] = defaultopt[i];
+            }
+        };
+        let stringify = print;
+        if(opt['printJSON']){
+            stringify = JSON.stringify;
+        }
         // @ sth real data
         // @ expect expected form
         // @ tmpopt local settings, can override opt
@@ -35,18 +75,19 @@ namespace tracelogNamespace {
                     return true;
                 }
             } catch (e) {
-                if (options('fullprint')) {
-                    console.log(JSON.stringify(sth), 'expected:', JSON.stringify(expect), color(e.stack));
-                    if(options('callback') != null){
+                if (options('printfullstack')) {
+                    console.log(stringify(sth), 'expected:', stringify(expect), color(e.stack));
+                    if (options('callback') != null) {
                         options('callback')(e.stack);
                     }
                     return false;
                 }
                 let errStr = e.stack.split('\n').slice(1);
                 let arr = errStr.slice(1, options('depth'));
-                console.log(JSON.stringify(sth), 'expected:', JSON.stringify(expect), color(arr.map(extract).join(' << ')));
-                if(options('callback') != null){
-                    options('callback')([JSON.stringify(sth), 'expected:', JSON.stringify(expect), arr.map(extract).join(' << ')].join(' '));
+                console.log(stringify(sth), 'expected:', stringify(expect), color(arr.map(extract).join(' << ')));
+                // console.log(JSON.stringify(sth), 'expected:', JSON.stringify(expect), color(arr.map(extract).join(' << ')));
+                if (options('callback') != null) {
+                    options('callback')([stringify(sth), 'expected:', stringify(expect), arr.map(extract).join(' << ')].join(' '));
                 }
                 return false;
             }
@@ -77,15 +118,18 @@ namespace tracelogNamespace {
         // We can even handle functions passed across iframes
         if ((typeof x === 'function' && typeof y === 'function') ||
             (x instanceof Date && y instanceof Date) ||
-            (x instanceof RegExp && y instanceof RegExp) ||
             (x instanceof String && y instanceof String) ||
             (x instanceof Number && y instanceof Number) ||
             (typeof (x) !== 'object' && typeof (x) === typeof (y))) {
             return true;
         }
+        if ((typeof x == 'string' && y instanceof RegExp)) {
+
+            return y.test(x);
+        }
         if (x instanceof Array && y instanceof Array) {
             if (x.length === 0 && y.length > 0) {
-                console.warn('array content not specified', x, y)
+                console.log(colors.cyan('array content not specified'), x, y);
                 return true;
             } else {
                 for (var i = 0; i < Math.min(x.length, y.length); i++) {
@@ -123,7 +167,9 @@ namespace tracelogNamespace {
                 return false;
             }
             else if (typeof y[p] !== typeof x[p]) {
-                return false;
+                if (!(y[p] instanceof RegExp && typeof x[p] == 'string')) {
+                    return false;
+                }
             }
         }
         for (p in x) {
@@ -131,10 +177,10 @@ namespace tracelogNamespace {
                 return false;
             }
             else if (typeof y[p] !== typeof x[p]) {
-                return false;
+                if (!(y[p] instanceof RegExp && typeof x[p] == 'string')) {
+                    return false;
+                }
             }
-
-
             if (!compare2Objects(x[p], y[p])) {
                 return false;
 
@@ -145,4 +191,3 @@ namespace tracelogNamespace {
     }
 
 }
-export default tracelogNamespace.tracelog;
