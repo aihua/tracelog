@@ -225,4 +225,4 @@ describe('test simple', function () {
 ```
 [npm-image]: https://img.shields.io/npm/v/tracelog.svg
 [npm-url]: https://www.npmjs.com/package/tracelog
-[npm-download]: https://img.shields.io/npm/dm/tracelog.svg
+[downloads-image]: https://img.shields.io/npm/dm/tracelog.svg
