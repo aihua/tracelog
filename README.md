@@ -2,7 +2,10 @@
 [![Coverage Status](https://coveralls.io/repos/github/fex-team/tracelog/badge.svg?branch=master)](https://coveralls.io/github/fex-team/tracelog?branch=master)
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
-Util functions for debug and trace; can do type checking for backend mocking check for fast iteration.
+
+# Introduction
+
+Toolkit for logging debugging and tracing; can do type checking for backend mocking check for fast iteration.
 
 In strict mode, one cannot use arguments.caller so it is hard to trace bugs.
 This library utilizes error stack to print full debug info when necessary.
@@ -17,7 +20,7 @@ tracelog(a) simply print nothing. (use console.log in this case if you want to p
 
 note that variable keys can be traced with RegExp.
 
-# useage
+# Useage
 
 ```
 // @ depth: trace depth
