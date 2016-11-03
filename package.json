@@ -10,12 +10,15 @@
   "devDependencies": {
     "mocha": "^1.17.1",
     "chai": "^1.9.1",
-    "@types/colors": "^0.6.33"
+    "@types/colors": "^0.6.33",
+    "istanbul": "0.4.5"
   },
   "scripts": {
     "compile": "tsc --outDir lib -w src/index.ts",
     "test": "mocha test/index.spec.js -w",
-    "testprint": "mocha test/index.spec_print.js -w"
+    "testprint": "mocha test/index.spec_print.js -w",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec  --check-leaks --slow 0 test/"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/fex-team/tracelog.svg?branch=master)](https://travis-ci.org/fex-team/tracelog?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/fex-team/tracelog/badge.svg?branch=master)](https://coveralls.io/github/fex-team/tracelog?branch=master)
-
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
 Util functions for debug and trace; can do type checking for backend mocking check for fast iteration.
