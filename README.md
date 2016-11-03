@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/fex-team/tracelog.svg?branch=master)](https://travis-ci.org/fex-team/tracelog?branch=master)
-[![Coverage Status](cover-img)](cover-url)
+[![Coverage Status][cover-img]][cover-url]
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
 # Introduction
