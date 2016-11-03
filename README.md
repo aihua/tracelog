@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/fex-team/tracelog.svg?branch=master)](https://travis-ci.org/fex-team/tracelog?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/fex-team/tracelog/badge.svg?branch=master)](https://coveralls.io/github/fex-team/tracelog?branch=master)
+[![Coverage Status](cover-img)](cover-url)
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
 # Introduction
@@ -228,3 +228,5 @@ describe('test mockjs', function () {
 [npm-image]: https://img.shields.io/npm/v/tracelog.svg
 [npm-url]: https://www.npmjs.com/package/tracelog
 [downloads-image]: https://img.shields.io/npm/dm/tracelog.svg
+[cover-url]: https://coveralls.io/repos/github/fex-team/tracelog/badge.svg?branch=master
+[cover-img]: http://img.shields.io/coveralls/fex-team/tracelog/master.svg
