@@ -235,7 +235,7 @@ describe('test simple', function () {
 
 ```
 # Links
-- [Changelog](https://github.com/fex-team/tracelog/ChangeLog.md)
+- [Changelog](https://github.com/fex-team/tracelog/blob/master/ChangeLog.md)
 - [Mockjs](https://github.com/nuysoft/Mock)
 
 [npm-image]: https://img.shields.io/npm/v/tracelog.svg
