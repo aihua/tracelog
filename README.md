@@ -31,7 +31,7 @@ note that variable keys can be traced with RegExp.
 // @ printJSON: use JSON.stringify for logging, which may not print RegExp etc.
 // customValid(sth, expect): a customary validation function
 // return true if sth is expected as expect
-```Javascript
+
 default options:
 depth: 3,
 color: 'yellow',
@@ -47,7 +47,7 @@ import tracelog from 'tracelog';
 var tracelog = tracelog(opt);
 //es 5
 var tracelog = require('../lib/index.js').tracelog();
-```
+
 
 
 describe('test mockjs', function () {
