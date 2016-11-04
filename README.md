@@ -9,7 +9,7 @@ Toolkit for logging debugging and tracing; can do type checking for backend mock
 In strict mode, one cannot use arguments.caller so it is hard to trace bugs.
 This library utilizes error stack to print full debug info when necessary.
 
-```
+```Javascript
 e.g.
 a = ['fd']
 tracelog(a , [1]) if not the same type it will print tracelog information
