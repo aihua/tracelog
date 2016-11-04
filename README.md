@@ -29,16 +29,25 @@ note that variable keys can be traced with RegExp.
 // @ disable: disable log
 // @ callback(logstr): for outer logger, write to file etc
 // @ printJSON: use JSON.stringify for logging, which may not print RegExp etc.
-default options
-opt = { depth: 3, color: 'yellow', fullprint: false, disable: false, callback: undefined, printJSON: false }
-
+// customValid(sth, expect): a customary validation function
+// return true if sth is expected as expect
+```Javascript
+default options:
+depth: 3,
+color: 'yellow',
+printfullstack: false,
+disable: false,
+useMockjs: false,
+callback: undefined,
+printJSON: false,
+customValid: undefined,
 //es 6
 import tracelog from 'tracelog';
 // or import {tracelog} from 'tracelog';
 var tracelog = tracelog(opt);
 //es 5
 var tracelog = require('../lib/index.js').tracelog();
-
+```
 
 
 describe('test mockjs', function () {
