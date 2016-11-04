@@ -1,0 +1,21 @@
+{
+  "extends": ["tslint:latest", "tslint-react"],
+  "rules": {
+    "no-constructor-vars": true,
+    "no-namespace": false,
+    "quotemark": false,
+    "ordered-imports":false,
+    "no-console": false,
+    "member-access": false,
+    "object-literal-sort-keys": false
+  },
+  "rulesDirectory": [
+  ],
+  "exclude":[
+    "client/node_modules",
+    "fis-conf.js",
+    "client/page/root/flexible.js",
+    "server/lib",
+    "client/utils/Recorder.ts"
+  ]
+}

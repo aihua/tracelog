@@ -3,7 +3,7 @@
 var assert = require("chai").assert;
 
 describe('test mockjs', function () {
-    var tracelog = require('../lib/index.js').tracelog.log({depth: 3,useMockjs: true});
+    var tracelog = require('../lib/index.js').tracelog({depth: 3,useMockjs: true});
     it('number', function () {
         assert.deepEqual(tracelog({number:2}, {'number|1-100':1}), true);
     });
@@ -91,7 +91,7 @@ describe('test mockjs', function () {
 
 
 describe('test simple', function () {
-     var tracelog = require('../lib/index.js').tracelog.log();
+    var tracelog = require('../lib/index.js').tracelog();
     it('number', function () {
         assert.deepEqual(tracelog(1, 0), true);
     });

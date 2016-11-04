@@ -1,5 +1,4 @@
-var print = require('../lib/index.js').tracelog.print; 
-
+var print = require('../lib/index.js').print; 
 var assert = require("chai").assert;
 describe('test print', function () {
     it('number', function () {

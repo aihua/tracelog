@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "target": "es3",
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "experimentalDecorators": true,
+        "jsx": "react",
+        "sourceMap": true,
+        "listFiles": true,
+        "outDir": "lib",
+        "pretty": true,
+        "declaration": true,
+        "traceResolution": true
+    },
+    "filesGlob": [
+        "*.d.ts"
+    ],
+    "inclue": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "output",
+        "typings",
+        "lib",
+        "test"
+    ]
+}

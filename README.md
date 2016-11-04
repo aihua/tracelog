@@ -22,7 +22,7 @@ note that variable keys can be traced with RegExp.
 # Useage
 
 
-```
+``` Javascript
 // @ depth: trace depth
 // @ color: console log color
 // @ fullprint: trace full information
@@ -38,8 +38,98 @@ var tracelog = trace.log(opt);
 //es 5
 var tracelog = require('../lib/index.js').tracelog.log();
 
+
+
+describe('test mockjs', function () {
+    var tracelog = require('../lib/index.js').tracelog({depth: 3,useMockjs: true});
+    it('number', function () {
+        assert.deepEqual(tracelog({number:2}, {'number|1-100':1}), true);
+    });
+    it('string', function () {
+        assert.deepEqual(tracelog( {str:'abc'}, {'str|1': 'abc'}), true);
+    });
+    it('regex', function(){
+        assert.deepEqual(tracelog({reg:'ab'}, {'reg':/^ab$/}), true);
+    })
+    it('array1', function () {
+        assert.deepEqual(tracelog({arr:[1, 2, 3]}, {'arr|1':[1,2,3]}), true);
+    });
+    it('array5', function () {
+        assert.deepEqual(tracelog(['fd'], {'arr|1':[1,2,3]}), false);
+    });
+    // !! this is different from withou mockjs,
+    // key is different and mockjs do not check for that
+    it('array6', function () {
+        assert.deepEqual(tracelog({arr:[{ a: 1 }]}, 
+        {'arr|1' : [{ 'b|1': 1 }]  } ), true);
+    });
+
+    it('different object1', function () {
+        assert.deepEqual(tracelog(
+            {
+                errno: 0,
+                errmsg: '',
+                data: [{ a: 1, b: 2, c: '' }]
+            },
+            {
+                errno: 209,
+                errmsg: 'not true',
+                data: [[]]
+            }), false);
+    });
+    it('same object1', function () {
+        assert.deepEqual(tracelog(
+            {
+                errno: 0,
+                errmsg: '',
+                data: [{ a: 1, b: 2, c: '' }]
+            },
+            {
+                'errno|0-100': 1,
+                'errmsg|0': 'not true',
+                'data|1': [{'a|1':1,'b|1-100':1, 'c|1-100':''}]
+            }), true);
+    });
+    // cannot check for variable key
+    // it('different object2', function () {
+    //     assert.deepEqual(tracelog(
+    //         { 
+    //                 '25 (forum_id)': {
+    //                     forum_id: 258,
+    //                     rank: 0
+    //                 } 
+    //         },
+    //         {
+                    
+    //                 '258': { 
+    //                     forum_id: 258, 
+    //                     rank: 0 
+    //                 },
+                
+    //         }), false);
+    // });
+    
+     
+    it('similar object regex', function () {
+        assert.deepEqual(tracelog(
+            {
+                data: {
+                    a: 1, b: 2, c: 'apple 10'
+                }
+            },
+            {
+                data: {
+                    a: 1, b: 2, 'c|1': /^\w+ \d+$/
+                }
+            }), true);
+    });
+})
+
+
+
+
 describe('test simple', function () {
-     var tracelog = require('../lib/index.js').tracelog.log();
+    var tracelog = require('../lib/index.js').tracelog();
     it('number', function () {
         assert.deepEqual(tracelog(1, 0), true);
     });
@@ -142,95 +232,12 @@ describe('test simple', function () {
     });
 })
 
-describe('test mockjs', function () {
-    var tracelog = require('../lib/index.js').tracelog.log({depth: 3,useMockjs: true});
-    it('number', function () {
-        assert.deepEqual(tracelog({number:2}, {'number|1-100':1}), true);
-    });
-    it('string', function () {
-        assert.deepEqual(tracelog( {str:'abc'}, {'str|1': 'abc'}), true);
-    });
-    it('regex', function(){
-        assert.deepEqual(tracelog({reg:'ab'}, {'reg':/^ab$/}), true);
-    })
-    it('array1', function () {
-        assert.deepEqual(tracelog({arr:[1, 2, 3]}, {'arr|1':[1,2,3]}), true);
-    });
-    it('array5', function () {
-        assert.deepEqual(tracelog(['fd'], {'arr|1':[1,2,3]}), false);
-    });
-    // !! this is different from withou mockjs,
-    // key is different and mockjs do not check for that
-    it('array6', function () {
-        assert.deepEqual(tracelog({arr:[{ a: 1 }]}, 
-        {'arr|1' : [{ 'b|1': 1 }]  } ), true);
-    });
-
-    it('different object1', function () {
-        assert.deepEqual(tracelog(
-            {
-                errno: 0,
-                errmsg: '',
-                data: [{ a: 1, b: 2, c: '' }]
-            },
-            {
-                errno: 209,
-                errmsg: 'not true',
-                data: [[]]
-            }), false);
-    });
-    it('same object1', function () {
-        assert.deepEqual(tracelog(
-            {
-                errno: 0,
-                errmsg: '',
-                data: [{ a: 1, b: 2, c: '' }]
-            },
-            {
-                'errno|0-100': 1,
-                'errmsg|0': 'not true',
-                'data|1': [{'a|1':1,'b|1-100':1, 'c|1-100':''}]
-            }), true);
-    });
-    // cannot check for variable key
-    // it('different object2', function () {
-    //     assert.deepEqual(tracelog(
-    //         { 
-    //                 '25 (forum_id)': {
-    //                     forum_id: 258,
-    //                     rank: 0
-    //                 } 
-    //         },
-    //         {
-                    
-    //                 '258': { 
-    //                     forum_id: 258, 
-    //                     rank: 0 
-    //                 },
-                
-    //         }), false);
-    // });
-    
-     
-    it('similar object regex', function () {
-        assert.deepEqual(tracelog(
-            {
-                data: {
-                    a: 1, b: 2, c: 'apple 10'
-                }
-            },
-            {
-                data: {
-                    a: 1, b: 2, 'c|1': /^\w+ \d+$/
-                }
-            }), true);
-    });
-})
-
-
-
 
 ```
+# Links
+- [Changelog](https://github.com/fex-team/tracelog/ChangeLog.md)
+- [Mockjs](https://github.com/nuysoft/Mock)
+
 [npm-image]: https://img.shields.io/npm/v/tracelog.svg
 [npm-url]: https://www.npmjs.com/package/tracelog
 [downloads-image]: https://img.shields.io/npm/dm/tracelog.svg
