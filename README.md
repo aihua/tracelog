@@ -33,10 +33,11 @@ default options
 opt = { depth: 3, color: 'yellow', fullprint: false, disable: false, callback: undefined, printJSON: false }
 
 //es 6
-import {tracelog as trace} from 'tracelog';
-var tracelog = trace.log(opt);
+import tracelog from 'tracelog';
+// or import {tracelog} from 'tracelog';
+var tracelog = tracelog(opt);
 //es 5
-var tracelog = require('../lib/index.js').tracelog.log();
+var tracelog = require('../lib/index.js').tracelog();
 
 
 
