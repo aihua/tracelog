@@ -21,6 +21,7 @@ note that variable keys can be traced with RegExp.
 
 # Useage
 
+
 ```
 // @ depth: trace depth
 // @ color: console log color
@@ -31,6 +32,11 @@ note that variable keys can be traced with RegExp.
 default options
 opt = { depth: 3, color: 'yellow', fullprint: false, disable: false, callback: undefined, printJSON: false }
 
+//es 6
+import {tracelog as trace} from 'tracelog';
+var tracelog = trace.log(opt);
+//es 5
+var tracelog = require('../lib/index.js').tracelog.log();
 
 describe('test simple', function () {
      var tracelog = require('../lib/index.js').tracelog.log();

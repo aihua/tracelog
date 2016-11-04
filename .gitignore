@@ -1,2 +1,5 @@
+.idea/
+.vscode/
+.npmignore
 node_modules/
 .idea

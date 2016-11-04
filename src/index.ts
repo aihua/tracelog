@@ -31,12 +31,18 @@ export namespace tracelog {
     }
 
     function extract(str) {
-        try {
-            str = str.match(/at ([^ ]+) \((.*)\)/);
-            let list = str[2].split('/');
-            return str[1] + '(' + list[list.length - 1] + ')';
-        } catch (e) {
-            return e.stack;
+       try {
+            let tmpstr = str.match(/at ([^ ]+) \((.*)\)/);
+            var list = tmpstr[2].split('/');
+            return tmpstr[1] + '(' + list[list.length - 1] + ')';
+        }
+        catch (e) {
+            try{
+                str = str.match(/at ([^\n]+)/);
+                return str[1];
+            }catch(e2){
+                return e2.stack;
+            }
         }
     }
     // @ depth: trace depth
