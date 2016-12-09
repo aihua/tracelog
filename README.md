@@ -13,7 +13,7 @@ This library utilizes error stack to print full debug info when necessary.
 e.g.
 a = ['fd']
 tracelog(a , [1]) if not the same type it will print tracelog information
-["fd"] expected: [1] Context.<anonymous>(index.spec.js:24:26) << callFn(runnable.js:250:21) 
+["fd"] expected: [1] Context.<anonymous>(index.spec.js:24:26) << callFn(runnable.js:250:21)
 tracelog(a) simply print nothing. (use console.log in this case if you want to print it anyway)
 ```
 
@@ -29,8 +29,9 @@ note that variable keys can be traced with RegExp.
 // @ disable: disable log
 // @ callback(logstr): for outer logger, write to file etc
 // @ printJSON: use JSON.stringify for logging, which may not print RegExp etc.
-// customValid(sth, expect): a customary validation function
+// @customValid(sth, expect): a customary validation function
 // return true if sth is expected as expect
+// silent: do not print in console
 
 default options:
 depth: 3,
@@ -41,6 +42,7 @@ useMockjs: false,
 callback: undefined,
 printJSON: false,
 customValid: undefined,
+silent: false
 //es 6
 import tracelog from 'tracelog';
 // or import {tracelog} from 'tracelog';
@@ -70,7 +72,7 @@ describe('test mockjs', function () {
     // !! this is different from withou mockjs,
     // key is different and mockjs do not check for that
     it('array6', function () {
-        assert.deepEqual(tracelog({arr:[{ a: 1 }]}, 
+        assert.deepEqual(tracelog({arr:[{ a: 1 }]},
         {'arr|1' : [{ 'b|1': 1 }]  } ), true);
     });
 
@@ -103,23 +105,23 @@ describe('test mockjs', function () {
     // cannot check for variable key
     // it('different object2', function () {
     //     assert.deepEqual(tracelog(
-    //         { 
+    //         {
     //                 '25 (forum_id)': {
     //                     forum_id: 258,
     //                     rank: 0
-    //                 } 
+    //                 }
     //         },
     //         {
-                    
-    //                 '258': { 
-    //                     forum_id: 258, 
-    //                     rank: 0 
+
+    //                 '258': {
+    //                     forum_id: 258,
+    //                     rank: 0
     //                 },
-                
+
     //         }), false);
     // });
-    
-     
+
+
     it('similar object regex', function () {
         assert.deepEqual(tracelog(
             {
@@ -184,22 +186,22 @@ describe('test simple', function () {
     });
     it('different object2', function () {
         assert.deepEqual(tracelog(
-            { 
+            {
                     '25 (forum_id)': {
                         forum_id: 258,
                         rank: 0
-                    } 
+                    }
             },
             {
-                    
-                    '258': { 
-                        forum_id: 258, 
-                        rank: 0 
+
+                    '258': {
+                        forum_id: 258,
+                        rank: 0
                     },
-                
+
             }), false);
     });
-    
+
     it('similar object', function () {
         assert.deepEqual(tracelog(
             {
