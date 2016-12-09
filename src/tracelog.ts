@@ -1,5 +1,5 @@
 /// <reference path="../node_modules/@types/colors/index.d.ts" />
-import * as colors  from 'colors';
+import * as colors from 'colors';
 import * as Mock from 'mockjs';
 export namespace tracelog {
     export function print(o) {
@@ -35,7 +35,7 @@ export namespace tracelog {
             let tmpstr = str.match(/at ([^ ]+) \((.*)\)/);
             let list = tmpstr[2].split('/');
             return tmpstr[1] + '(' + list[list.length - 1] + ')';
-        }catch (e) {
+        } catch (e) {
             try {
                 str = str.match(/at ([^\n]+)/);
                 return str[1];
@@ -50,6 +50,7 @@ export namespace tracelog {
     // @ disable: disable log
     // @ callback(logstr): for outer logger, write to file etc
     // @ printJSON: use JSON.stringify for logging
+    // @ silent: do not print
     // customValid(sth, expect): a customary validation function
     // return true if sth is expected as expect.
     export function tracelog(opt) {
@@ -79,7 +80,7 @@ export namespace tracelog {
         // @ sth real data
         // @ expect expected form
         // @ tmpopt local settings, can override opt
-        return  (sth, expect, tmpopt) => { // trace is enabled if expect is not undefined
+        return (sth, expect, tmpopt) => { // trace is enabled if expect is not undefined
             let options = (attr) => {
                 return (tmpopt && attr in tmpopt) ? tmpopt[attr] : opt[attr];
             };
@@ -96,8 +97,8 @@ export namespace tracelog {
                     [sth, expect] = [expect, sth];
                     return Mock.valid(sth, expect).length === 0;
                 };
-            }else if(options('customValid')){
-                 compare2Objects = options('customValid');
+            } else if (options('customValid')) {
+                compare2Objects = options('customValid');
             }
             try {
                 if (!compare2Objects(sth, expect)) {
@@ -107,7 +108,9 @@ export namespace tracelog {
                 }
             } catch (e) {
                 if (options('printfullstack')) {
-                    console.log(stringify(sth), 'expected:', stringify(expect), color(e.stack));
+                    if (!options['silient']) {
+                        console.log(stringify(sth), 'expected:', stringify(expect), color(e.stack));
+                    }
                     if (options('callback') != null) {
                         options('callback')(e.stack);
                     }
@@ -115,10 +118,12 @@ export namespace tracelog {
                 }
                 let errStr = e.stack.split('\n').slice(1);
                 let arr = errStr.slice(1, options('depth'));
-                console.log(stringify(sth), 'expected:', stringify(expect), color(arr.map(extract).join(' << ')));
+                if (!options['silient']) {
+                    console.log(stringify(sth), 'expected:', stringify(expect), color(arr.map(extract).join(' << ')));
+                }
                 if (options('callback') != null) {
                     options('callback')([stringify(sth), 'expected:', stringify(expect),
-                        arr.map(extract).join(' << ')].join(' '));
+                    arr.map(extract).join(' << ')].join(' '));
                 }
                 return false;
             }
@@ -133,7 +138,7 @@ export namespace tracelog {
             return true;
         }
 
-        // Compare primitives and functions.     
+        // Compare primitives and functions.
         // Check if both arguments link to the same object.
         // Especially useful on the step where we compare prototypes
         if (x === y) {
@@ -203,7 +208,7 @@ export namespace tracelog {
         for (p in x) {
             if (!checkIfSame(y.hasOwnProperty(p), x.hasOwnProperty(p))) {
                 return false;
-            }else if (typeof y[p] !== typeof x[p]) {
+            } else if (typeof y[p] !== typeof x[p]) {
                 if (!(y[p] instanceof RegExp && typeof x[p] === 'string')) {
                     return false;
                 }

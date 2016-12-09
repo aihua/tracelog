@@ -1,37 +1,37 @@
 {
-  "name": "tracelog",
-  "version": "1.4.0",
-  "description": "util functions for debug and trace; can do type checking for backend mocking check for fast iteration",
-  "main": "lib/index.js",
-  "dependencies": {
-    "colors": "^1.1.2",
-    "mockjs": "^1.0.1-beta3"
-  },
-  "devDependencies": {
-    "mocha": "^1.17.1",
-    "chai": "^1.9.1",
-    "@types/colors": "^0.6.33",
-    "istanbul": "0.4.5"
-  },
-  "scripts": {
-    "build": "tsc -w",
-    "test": "mocha -w",
-    "testprint": "mocha test/index.spec_print.js -w",
-    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec  --check-leaks --slow 0 test/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/fex-team/tracelog"
-  },
-  "author": "lyuqi",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/fex-team/tracelog/issues"
-  },
-  "typescript": {
-    "definition": "index.d.ts"
-  },
-  "typings": "index.d.ts",
-  "homepage": "https://github.com/fex-team/tracelog"
+    "name": "tracelog",
+    "version": "1.4.2",
+    "description": "util functions for debug and trace; can do type checking for backend mocking check for fast iteration",
+    "main": "lib/index.js",
+    "dependencies": {
+        "colors": "^1.1.2",
+        "mockjs": "^1.0.1-beta3"
+    },
+    "devDependencies": {
+        "mocha": "^1.17.1",
+        "chai": "^1.9.1",
+        "@types/colors": "^0.6.33",
+        "istanbul": "0.4.5"
+    },
+    "scripts": {
+        "build": "tsc -w",
+        "test": "mocha -w",
+        "testprint": "mocha test/index.spec_print.js -w",
+        "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+        "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec  --check-leaks --slow 0 test/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fex-team/tracelog"
+    },
+    "author": "lyuqi",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/fex-team/tracelog/issues"
+    },
+    "typescript": {
+        "definition": "index.d.ts"
+    },
+    "typings": "index.d.ts",
+    "homepage": "https://github.com/fex-team/tracelog"
 }
