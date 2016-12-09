@@ -63,7 +63,7 @@ export namespace tracelog {
             callback: undefined,
             printJSON: false,
             customValid: undefined,
-            silent: false;
+            silent: false,
         };
         if (opt == null) {
             opt = defaultopt;
@@ -109,7 +109,7 @@ export namespace tracelog {
                 }
             } catch (e) {
                 if (options('printfullstack')) {
-                    if (!options('silient')) {
+                    if (!options('silent')) {
                         console.log(stringify(sth), 'expected:', stringify(expect), color(e.stack));
                     }
                     if (options('callback') != null) {
@@ -119,7 +119,7 @@ export namespace tracelog {
                 }
                 let errStr = e.stack.split('\n').slice(1);
                 let arr = errStr.slice(1, options('depth'));
-                if (!options('silient')) {
+                if (!options('silent')) {
                     console.log(stringify(sth), 'expected:', stringify(expect), color(arr.map(extract).join(' << ')));
                 }
                 if (options('callback') != null) {
